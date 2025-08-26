@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Lintextor
+GenericName=Text Editor
+Comment=Create and edit Windows-compatible text files
+Exec=/usr/share/Lintextor/lintextor.py
+Icon=/usr/share/pixmaps/Lintextor.png
+Terminal=false
+Type=Application
+Categories=Utility;TextEditor;
+StartupNotify=true
+

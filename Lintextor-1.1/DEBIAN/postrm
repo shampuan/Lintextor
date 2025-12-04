@@ -1,0 +1,13 @@
+#!/bin/sh
+set -e
+
+# 1. MIME tipini kaldır
+if [ "$1" = "purge" ]; then
+    # MIME veritabanını, Lintextor XML'i silindikten sonra yeniden güncelleyerek temizler.
+    update-mime-database /usr/share/mime >/dev/null 2>&1 || true
+    
+    # Masaüstü veritabanını güncelle (eski .desktop ayarlarını temizlemek için)
+    update-desktop-database >/dev/null 2>&1 || true
+fi
+
+exit 0

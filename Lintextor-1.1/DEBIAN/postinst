@@ -1,0 +1,25 @@
+#!/bin/sh
+set -e
+
+# 1. MIME veritabanını güncelle
+# Yeni .xml dosyasını sisteme tanıtmak için zorunlu.
+update-mime-database /usr/share/mime >/dev/null 2>&1 || true
+
+# 2. Yeni MIME tipini Lintextor için varsayılan olarak ayarla
+# Bu, sadece "application/x-lintextor-txt" için Lintextor'u varsayılan yapar.
+# Diğer tüm kullanıcıların ayarlarını (mimeapps.list) etkilemeden sistem çapında varsayılanı ayarlar.
+update-alternatives --install /usr/bin/editor editor /usr/bin/sensible-editor 100 \
+    --slave /usr/share/man/man1/editor.1.gz editor.1.gz /usr/share/man/man1/sensible-editor.1.gz 
+
+# Masaüstü veritabanını güncelleyerek yeni .desktop dosyasını sisteme tanıt.
+update-desktop-database >/dev/null 2>&1 || true
+
+# 3. Sistemin varsayılan MIME tipini ayarla (alternatif yol)
+# text/plain'i etkilemeden sadece yeni mime-type için Lintextor'u varsayılan olarak atar.
+# Bu komut genellikle .desktop dosyasındaki MimeType girdisi ve
+# update-desktop-database/update-mime-database çalıştırıldıktan sonra kendiliğinden çalışır.
+# Ancak bazen manuel olarak atamak gerekir.
+# xdg-mime ile Lintextor.desktop'ı sadece bu MimeType için sistemin varsayılanı yaparız.
+xdg-mime default lintextor.desktop application/x-lintextor-txt
+
+exit 0
